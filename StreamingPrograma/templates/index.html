@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Streaming Platform</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #f0f0f0, #d9e2ec); /* Degradado suave */
+            color: #333;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #212121; /* Color más oscuro para el texto */
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: center;
+        }
+
+        li {
+            margin-bottom: 40px; /* Aumenta el margen inferior para dar más espacio entre videos */
+        }
+
+        video {
+            margin-top: 10px; /* Añade margen superior al recuadro del video */
+        }
+
+        .video-title {
+            margin-top: 10px; /* Añade margen superior al título del video */
+            text-align: center;
+            font-weight: bold;
+            color: #333; /* Color del título */
+        }
+    </style>
+</head>
+<body>
+    <h1>Plataforma de Streaming</h1>
+    <h2>Subir un video</h2>
+    <form method="POST" action="/upload" enctype="multipart/form-data">
+        <input type="file" name="file" accept="video/*">
+        <input type="submit" value="Upload">
+    </form>
+
+    <h2>Videos Disponibles</h2>
+    <ul>
+        {% for video in videos %}
+        <li>
+            <video width="320" height="240" controls>
+                <source src="{{ url_for('video', filename=video) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="video-title">
+                <a href="{{ url_for('video', filename=video) }}">{{ video }}</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
